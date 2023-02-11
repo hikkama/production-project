@@ -1,8 +1,8 @@
 import webpack from 'webpack'
-import htmlWebpackPlugin from 'html-webpack-plugin'
-import { BuildOptions } from './types/config'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
+import { BuildOptions } from './types/config'
 
 export function buildPlugins({
   paths,
@@ -10,7 +10,7 @@ export function buildPlugins({
 }: BuildOptions): webpack.WebpackPluginInstance[] {
   return [
     new webpack.ProgressPlugin(),
-    new htmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: paths.html,
     }),
     new MiniCssExtractPlugin({
