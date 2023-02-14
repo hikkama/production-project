@@ -1,5 +1,6 @@
 {
-  "Test example": "Тестовый пример",
   "Translate": "Перевод",
-  "Language": "English"
+  "Language": "English",
+	"Loading": "Загрузка...",
+	"toggle": "Свернуть"
 }
