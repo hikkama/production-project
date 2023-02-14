@@ -1,6 +1,7 @@
 {
   "Translate": "Translate",
   "Language": "Русский",
-	"Loading": "Loading...",
-	"toggle": "Toggle"
+  "Loading": "Loading...",
+  "toggle": "Toggle",
+  "NotFoundPage": "Page not found"
 }
