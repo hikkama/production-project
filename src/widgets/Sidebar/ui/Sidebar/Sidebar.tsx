@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { classNames } from 'shared/lib/classNames/classNames'
-import { LangSwitcher } from 'shared/ui/LangSwitcher'
-import { ThemeSwitcher } from 'shared/ui/ThemeSwitcher'
+import { LangSwitcher } from 'features/LangSwitcher'
+import { ThemeSwitcher } from 'features/ThemeSwitcher'
 
 import cls from './Sidebar.module.scss'
 
