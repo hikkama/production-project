@@ -1,3 +1,5 @@
+import path from 'path'
+
 export default {
   clearMocks: true,
   testEnvironment: 'jsdom',
@@ -7,8 +9,9 @@ export default {
   modulePaths: [
     '<rootDir>/src/',
   ],
-	moduleNameMapper: {
+  moduleNameMapper: {
     '\\.(s?css)$': 'identity-obj-proxy',
+    '\\.svg': path.resolve(__dirname, 'jestEmptyComponent.tsx'),
   },
   rootDir: '../../',
   testMatch: ['<rootDir>src/**/*(*.)@(spec|test).[tj]s?(x)'],

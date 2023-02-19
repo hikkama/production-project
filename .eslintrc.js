@@ -6,7 +6,6 @@ module.exports = {
   },
   extends: ['plugin:react/recommended', 'airbnb', 'plugin:i18next/recommended'],
   parser: '@typescript-eslint/parser',
-  overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -34,9 +33,17 @@ module.exports = {
     indent: [1],
     'react/require-default-props': 'off',
     'react/function-component-definition': 'off',
-    'i18next/no-literal-string': ['error', { markupOnly: true, ignoreAttribute: ['to'] }],
+    'i18next/no-literal-string': ['error', { markupOnly: true, ignoreAttribute: ['to', 'data-testid'] }],
   },
   globals: {
     __IS_DEV__: true,
   },
+  overrides: [
+    {
+      files: ['**/src/**/*.test.{ts,tsx}'],
+      rules: {
+        'i18next/no-literal-string': 'off',
+      },
+    },
+  ],
 }

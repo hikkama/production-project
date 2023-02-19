@@ -1,10 +1,14 @@
 import { render, screen } from '@testing-library/react'
-import { Button } from './Button'
+import { Button, ThemeButton } from './Button'
 
 describe('Button', () => {
-  test('with only first param', () => {
-    // eslint-disable-next-line i18next/no-literal-string
+  test('Test render', () => {
     render(<Button>Test</Button>)
     expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  test('Test theme', () => {
+    render(<Button theme={ThemeButton.CLEAR}>Test</Button>)
+    expect(screen.getByText('Test')).toHaveClass('clear')
   })
 })
