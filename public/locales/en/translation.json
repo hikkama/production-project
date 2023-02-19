@@ -2,5 +2,8 @@
   "Translate": "Translate",
   "Language": "Русский",
   "toggle": "Toggle",
-  "NotFoundPage": "Page not found"
+  "NotFoundPage": "Page not found",
+  "Error": "An unexpected error has occurred",
+  "Refresh page": "Refresh page",
+  "throw Error": "Throw error"
 }

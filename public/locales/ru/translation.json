@@ -2,5 +2,8 @@
   "Translate": "Перевод",
   "Language": "English",
   "toggle": "Свернуть",
-  "NotFoundPage": "Страница не найдена"
+  "NotFoundPage": "Страница не найдена",
+  "Error": "Произошла непредвиденная ошибка",
+  "Refresh page": "Обновить страницу",
+  "throw Error": "Выбросить ошибку"
 }
