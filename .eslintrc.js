@@ -10,7 +10,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'i18next'],
+  plugins: ['react', '@typescript-eslint', 'i18next', 'react-hooks'],
   rules: {
     semi: ['error', 'never'],
     'comma-dangle': [
@@ -33,7 +33,11 @@ module.exports = {
     indent: [1],
     'react/require-default-props': 'off',
     'react/function-component-definition': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
     'i18next/no-literal-string': ['error', { markupOnly: true, ignoreAttribute: ['to', 'data-testid'] }],
+    'jsx-a11y/no-static-element-interactions': 'off', // temporary
+    'jsx-a11y/click-events-have-key-events': 'off', // temporary
   },
   globals: {
     __IS_DEV__: true,
@@ -49,6 +53,7 @@ module.exports = {
       files: ['**/src/**/*.stories.@(js|jsx|ts|tsx)'],
       rules: {
         'react/jsx-props-no-spreading': 'off',
+        'max-len': 'off',
       },
     },
   ],
