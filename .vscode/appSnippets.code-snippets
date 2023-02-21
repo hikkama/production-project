@@ -19,5 +19,17 @@
 			"}",
     ],
     "description": "Custom React Component"
+  },
+	"Simple test": {
+    "prefix": "tst",
+    "body": [
+			"describe('$TM_FILENAME_BASE$1', () => {",
+				"test('$2', () => {",
+					"expect().toEqual()",
+				"})",
+			"})",
+    ],
+    "description": "Snippet for simple test expect -> toEqual"
   }
 }
+

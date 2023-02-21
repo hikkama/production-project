@@ -20,6 +20,7 @@ module.exports = {
     'no-shadow': 'off',
     'no-underscore-dangle': 'off',
     'no-tabs': ['error', { allowIndentationTabs: true }],
+    'no-param-reassign': 'off',
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': 'off',
