@@ -24,6 +24,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 17.x ]
+    needs: npm-cache
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v3
@@ -48,6 +49,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 17.x ]
+    needs: npm-cache
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v3
