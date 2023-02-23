@@ -8,15 +8,26 @@ on:
 jobs:
   npm-cache:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
     steps: 
       - name: Checkout Commit
         uses: actions/checkout@v3
-      - name: Cache deps
-        uses: actions/cache@v3
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
         with:
-          path: ~/.npm
-          key: node_modules-${{ hashFiles('**/package-lock.json') }}
+          node-version: ${{ matrix.node }}
+      - name: Cache npm deps
+        uses: actions/cache@v3
+        id: cache-deps
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
       - name: Install deps
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
 
   linting:
@@ -29,16 +40,17 @@ jobs:
       - name: Checkout Commit
         uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - name: Cache deps
+      - name: Restore npm deps
         uses: actions/cache@v3
+        id: cache-deps
         with:
-          path: ~/.npm
-          key: node_modules-${{ hashFiles('**/package-lock.json') }}
-      # - name: Install deps
-      #   run: npm ci
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
       - name: linting ts
         run: npm run lint:ts
       - name: linting scss
@@ -54,16 +66,17 @@ jobs:
       - name: Checkout Commit
         uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - name: Cache deps
+      - name: Restore npm deps
         uses: actions/cache@v3
+        id: cache-deps
         with:
-          path: ~/.npm
-          key: node_modules-${{ hashFiles('**/package-lock.json') }}
-      # - name: Install deps
-      #   run: npm ci
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
       - name: unit testing
         run: npm run test:unit
 
