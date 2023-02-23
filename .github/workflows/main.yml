@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 17.x ]
+    needs: [build]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
@@ -27,6 +28,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 17.x ]
+    needs: [build]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
@@ -37,12 +39,32 @@ jobs:
       - name: unit testing
         run: npm run test:unit
 
-  build_screenshot-test:
+  screenshot-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 17.x ]
-    needs: [linting, unit-test]
+    needs: [build]
+    steps:
+      - name: Checkout Commit
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: build storybook
+        if: always()
+        run: npm run storybook:build
+      - name: screenshot testing
+        if: always()
+        run: npm run test:ui:ci
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
+    
     steps:
       - uses: actions/checkout@v2
       - name: Staring Node.js ${{ matrix.node-version }}
@@ -52,11 +74,4 @@ jobs:
       - name: install modules
         run: npm install
       - name: build production project
-        if: always()
         run: npm run build:prod
-      - name: build storybook
-        if: always()
-        run: npm run storybook:build
-      - name: screenshot testing
-        if: always()
-        run: npm run test:ui:ci
