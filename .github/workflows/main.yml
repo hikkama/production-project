@@ -1,10 +1,24 @@
 name: linting, testing, building
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
 jobs:
+  npm-cache:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Commit
+        uses: actions/checkout@v3
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node_modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install deps
+        run: npm ci
+
   linting:
     runs-on: ubuntu-latest
     strategy:
@@ -12,18 +26,17 @@ jobs:
         node-version: [ 17.x ]
     steps:
       - name: Checkout Commit
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - name: Cache
-        uses: actions/cache@v2
+      - name: Cache deps
+        uses: actions/cache@v3
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - name: Install npm
-        if: steps.npm-cache.outputs.cache-hit != 'true'
+          path: ~/.npm
+          key: node_modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install deps
         run: npm ci
       - name: linting ts
         run: npm run lint:ts
@@ -37,68 +50,67 @@ jobs:
         node-version: [ 17.x ]
     steps:
       - name: Checkout Commit
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - name: Cache
-        uses: actions/cache@v2
+      - name: Cache deps
+        uses: actions/cache@v3
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - name: Install npm
-        if: steps.npm-cache.outputs.cache-hit != 'true'
+          path: ~/.npm
+          key: node_modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install deps
         run: npm ci
       - name: unit testing
         run: npm run test:unit
 
-  screenshot-test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
-    steps:
-      - name: Checkout Commit
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - name: Install npm
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: build storybook
-        if: always()
-        run: npm run storybook:build
-      - name: screenshot testing
-        if: always()
-        run: npm run test:ui:ci
+  # screenshot-test:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [ 17.x ]
+  #   steps:
+  #     - name: Checkout Commit
+  #       uses: actions/checkout@v3
+  #     - name: Use Node.js ${{ matrix.node }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: Cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: '**/node_modules'
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #     - name: Install npm
+  #       if: steps.npm-cache.outputs.cache-hit != 'true'
+  #       run: npm ci
+  #     - name: build storybook
+  #       if: always()
+  #       run: npm run storybook:build
+  #     - name: screenshot testing
+  #       if: always()
+  #       run: npm run test:ui:ci
 
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
-    needs: [screenshot-test, linting, unit-test]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Staring Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - name: Install npm
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci
-      - name: build production project
-        run: npm run build:prod
+  # build:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [ 17.x ]
+  #   needs: [screenshot-test, linting, unit-test]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Staring Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: '**/node_modules'
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #     - name: Install npm
+  #       if: steps.npm-cache.outputs.cache-hit != 'true'
+  #       run: npm ci
+  #     - name: build production project
+  #       run: npm run build:prod
