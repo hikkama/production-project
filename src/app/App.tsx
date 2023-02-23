@@ -1,4 +1,3 @@
-import { setDefaultNamespace } from 'i18next'
 import { Suspense } from 'react'
 
 import { classNames } from 'shared/lib/classNames/classNames'
@@ -17,7 +16,7 @@ function App() {
         </div>
       </Suspense>
     </div>
-  ) setDefaultNamespace
+  )
 }
 
 export default App
