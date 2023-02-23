@@ -37,8 +37,8 @@ jobs:
         with:
           path: ~/.npm
           key: node_modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install deps
-        run: npm ci
+      # - name: Install deps
+      #   run: npm ci
       - name: linting ts
         run: npm run lint:ts
       - name: linting scss
@@ -62,8 +62,8 @@ jobs:
         with:
           path: ~/.npm
           key: node_modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install deps
-        run: npm ci
+      # - name: Install deps
+      #   run: npm ci
       - name: unit testing
         run: npm run test:unit
 
