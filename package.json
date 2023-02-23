@@ -9,8 +9,10 @@
     "build:prod": "webpack --env mode=production",
     "build:dev": "webpack --env mode=development",
     "lint:ts": "npx eslint '**/*.{ts,tsx}'",
+    "lint:ts:changed": "npx eslint --cache --fix $(git diff --cached --name-only --diff-filter=ACM '*.js' '*.jsx' '*.ts' '*.tsx')",
     "lint:ts:fix": "npx eslint '**/*.{ts,tsx}' --fix",
     "lint:scss": "npx stylelint '**/*.scss'",
+    "lint:scss:changed": "npx stylelint $(git diff --cached --name-only --diff-filter=ACM '*.css' '*.scss')",
     "lint:scss:fix": "npx stylelint \"**/*.scss\" --fix",
     "test:unit": "jest --config ./config/jest/jest.config.ts",
     "test:ui": "npx loki test",
@@ -20,8 +22,7 @@
     "test:ui:json": "node scripts/generate-visual-json-report.js",
     "test:ui:html": "npx reg-cli --from .loki/report.json --report .loki/report.html",
     "storybook": "start-storybook -p 6006 -c ./config/storybook",
-    "storybook:build": "build-storybook -c ./config/storybook --quiet",
-    "prepare": "husky install"
+    "storybook:build": "build-storybook -c ./config/storybook --quiet"
   },
   "keywords": [],
   "author": "",
