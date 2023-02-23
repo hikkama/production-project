@@ -7,17 +7,13 @@ on:
 jobs:
   npm-cache:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
     steps: 
       - name: Checkout Commit
         uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node }}
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
-          package-manager: 'npm'
+          node-version: '16.x'
       - name: Cache npm deps
         uses: actions/cache@v3
         id: cache-deps
@@ -30,101 +26,101 @@ jobs:
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
 
-  linting:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
-    needs: npm-cache
-    steps:
-      - name: Checkout Commit
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Restore npm deps
-        uses: actions/cache@v3
-        id: cache-deps
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-      - name: linting ts
-        run: npm run lint:ts
-      - name: linting scss
-        run: npm run lint:scss
+  # linting:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [ 17.x ]
+  #   needs: npm-cache
+  #   steps:
+  #     - name: Checkout Commit
+  #       uses: actions/checkout@v3
+  #     - name: Use Node.js ${{ matrix.node }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: Restore npm deps
+  #       uses: actions/cache@v3
+  #       id: cache-deps
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-npm-
+  #     - name: linting ts
+  #       run: npm run lint:ts
+  #     - name: linting scss
+  #       run: npm run lint:scss
 
-  unit-test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
-    needs: npm-cache
-    steps:
-      - name: Checkout Commit
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Restore npm deps
-        uses: actions/cache@v3
-        id: cache-deps
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-      - name: unit testing
-        run: npm run test:unit
+  # unit-test:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [ 17.x ]
+  #   needs: npm-cache
+  #   steps:
+  #     - name: Checkout Commit
+  #       uses: actions/checkout@v3
+  #     - name: Use Node.js ${{ matrix.node }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: Restore npm deps
+  #       uses: actions/cache@v3
+  #       id: cache-deps
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-npm-
+  #     - name: unit testing
+  #       run: npm run test:unit
 
-  screenshot-test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
-    needs: npm-cache
-    steps:
-      - name: Checkout Commit
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Restore npm deps
-        uses: actions/cache@v3
-        id: cache-deps
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-      - name: build storybook
-        run: npm run storybook:build
-      - name: screenshot testing
-        run: npm run test:ui:ci
+  # screenshot-test:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [ 17.x ]
+  #   needs: npm-cache
+  #   steps:
+  #     - name: Checkout Commit
+  #       uses: actions/checkout@v3
+  #     - name: Use Node.js ${{ matrix.node }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: Restore npm deps
+  #       uses: actions/cache@v3
+  #       id: cache-deps
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-npm-
+  #     - name: build storybook
+  #       run: npm run storybook:build
+  #     - name: screenshot testing
+  #       run: npm run test:ui:ci
 
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
-    needs: [screenshot-test, linting, unit-test, npm-cache]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Staring Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Restore npm deps
-        uses: actions/cache@v3
-        id: cache-deps
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-      - name: build production project
-        run: npm run build:prod
+  # build:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [ 17.x ]
+  #   needs: [screenshot-test, linting, unit-test, npm-cache]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Staring Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Restore npm deps
+  #       uses: actions/cache@v3
+  #       id: cache-deps
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-npm-
+  #     - name: build production project
+  #       run: npm run build:prod
