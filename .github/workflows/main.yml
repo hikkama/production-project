@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 17.x ]
-
+    needs: [linting, unit-test]
     steps:
       - uses: actions/checkout@v2
       - name: Staring Node.js ${{ matrix.node-version }}
