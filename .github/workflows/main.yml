@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         node-version: [ 17.x ]
-    # needs: [build]
     steps:
       - name: Checkout Commit
         uses: actions/checkout@v2
@@ -18,62 +17,83 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - name: install modules
-        run: npm install
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install npm
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: linting ts
         run: npm run lint:ts
       - name: linting scss
         run: npm run lint:scss
 
-  # unit-test:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [ 17.x ]
-  #   needs: [build]
-  #   steps:
-  #     - name: Checkout Commit
-  #       uses: actions/checkout@v2
-  #     - name: Use Node.js ${{ matrix.node }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node }}
-  #     - name: unit testing
-  #       run: npm run test:unit
+  unit-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
+    steps:
+      - name: Checkout Commit
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install npm
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: unit testing
+        run: npm run test:unit
 
-  # screenshot-test:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [ 17.x ]
-  #   needs: [build]
-  #   steps:
-  #     - name: Checkout Commit
-  #       uses: actions/checkout@v2
-  #     - name: Use Node.js ${{ matrix.node }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node }}
-  #     - name: build storybook
-  #       if: always()
-  #       run: npm run storybook:build
-  #     - name: screenshot testing
-  #       if: always()
-  #       run: npm run test:ui:ci
+  screenshot-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
+    needs: [build]
+    steps:
+      - name: Checkout Commit
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install npm
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: build storybook
+        if: always()
+        run: npm run storybook:build
+      - name: screenshot testing
+        if: always()
+        run: npm run test:ui:ci
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [ 17.x ]
-    
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Staring Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #     - name: install modules
-  #       run: npm install
-  #     - name: build production project
-  #       run: npm run build:prod
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
+    needs: [screenshot-test, linting, unit-test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Staring Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: npm install
+      - name: build production project
+        run: npm run build:prod
