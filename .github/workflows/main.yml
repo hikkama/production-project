@@ -37,7 +37,7 @@ jobs:
       - name: unit testing
         run: npm run test:unit
 
-  build:screenshot-test:
+  build_screenshot-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
