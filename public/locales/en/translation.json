@@ -1,11 +1,13 @@
 {
   "Translate": "Translate",
-  "Language": "Русский",
+  "Language": "Russian",
   "Short lang": "Ru",
   "toggle": "Toggle",
   "NotFoundPage": "Page not found",
   "Error": "An unexpected error has occurred",
   "Refresh page": "Refresh page",
   "throw Error": "Throw error",
-  "Enter": "Enter"
+  "Enter": "Enter",
+  "Username": "Enter username",
+  "Password": "Enter password"
 }
