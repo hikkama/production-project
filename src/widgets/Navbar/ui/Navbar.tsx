@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import { LoginModal } from 'features/AuthByUsername'
+import { LoginModal } from 'features/authByUsername'
 import { classNames } from 'shared/lib/classNames/classNames'
 import { Button, ButtonTheme } from 'shared/ui/Button/Button'
 import { getUserAuthData, userActions } from 'entities/User'
