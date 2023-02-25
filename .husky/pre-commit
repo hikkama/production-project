@@ -2,5 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run lint:ts:changed
-npm run lint:scss:changed
+npm run lint:scss:fix
 npm run test:unit
