@@ -25,6 +25,13 @@ Clear.args = {
   theme: ButtonTheme.CLEAR,
 }
 
+export const Disabled = Template.bind({})
+Disabled.args = {
+  children: 'Disabled',
+  theme: ButtonTheme.OUTLINE,
+  disabled: true,
+}
+
 export const Outline = Template.bind({})
 Outline.args = {
   children: 'Text',

@@ -9,5 +9,8 @@
   "throw Error": "Throw error",
   "Enter": "Enter",
   "Username": "Enter username",
-  "Password": "Enter password"
+  "Password": "Enter password",
+  "AuthForm": "Authorization form",
+  "Auth error": "Incorrect username or password",
+  "Quit": "Quit"
 }

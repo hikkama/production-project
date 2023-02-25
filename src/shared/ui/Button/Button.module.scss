@@ -4,6 +4,12 @@
   padding: 6px 15px;
 }
 
+.disabled {
+  opacity: 0.4;
+  cursor: wait;
+  paint-order: none;
+}
+
 .clear {
   padding: 0;
   border: none;

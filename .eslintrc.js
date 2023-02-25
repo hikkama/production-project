@@ -16,6 +16,7 @@ module.exports = {
     'comma-dangle': [
       'error',
     ],
+    'max-len': ['warn', { code: 120 }],
     'no-unused-vars': 'warn',
     'no-shadow': 'off',
     'no-underscore-dangle': 'off',
