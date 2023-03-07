@@ -23,6 +23,6 @@ describe('getLoginState selector test', () => {
 
   it('should work with empty state', () => {
     const state: DeepPartial<StateSchema> = {}
-    expect(getLoginState(state as StateSchema)).toEqual(undefined)
+    expect(getLoginState(state as StateSchema)).toBeUndefined()
   })
 })
