@@ -30,7 +30,7 @@ export const DynamicModuleLoader:FC<DynamicModuleLoaderProps> = (props) => {
 
     return () => {
       if (removeAfterUnmount) {
-        Object.entries(reducers).forEach(([key, reducer]: ReducersListEntry) => {
+        Object.entries(reducers).forEach(([key]: ReducersListEntry) => {
           store.reducerManager.remove('loginForm')
           dispatch({ type: `@DESTROY ${key} reducer` })
         })
