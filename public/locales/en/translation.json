@@ -12,5 +12,8 @@
   "Password": "Enter password",
   "AuthForm": "Authorization form",
   "Auth error": "Incorrect username or password",
-  "Quit": "Quit"
+  "Quit": "Quit",
+	"Profile page": "Profile page",
+	"Main page": "Main Page",
+	"About page": "About Page"
 }
