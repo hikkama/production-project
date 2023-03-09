@@ -22,6 +22,7 @@ module.exports = {
     'no-tabs': ['error', { allowIndentationTabs: true }],
     'no-param-reassign': 'off',
     'no-unused-vars': 'off',
+    'no-undef': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
@@ -44,6 +45,7 @@ module.exports = {
   },
   globals: {
     __IS_DEV__: true,
+    __API__: true,
   },
   overrides: [
     {

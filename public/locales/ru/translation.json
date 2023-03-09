@@ -13,7 +13,7 @@
   "AuthForm": "Форма авторизации",
   "Auth error": "Вы ввели неверный логин или пароль",
   "Quit": "Выйти",
-	"Profile page": "Страница профиля",
-	"Main page": "Главная страница",
-	"About page": "О сайте"
+	"Profile page": "Профиль",
+	"Main page": "Главная",
+	"About page": "О нас"
 }

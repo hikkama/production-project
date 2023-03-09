@@ -28,12 +28,6 @@ export function buildLoaders({ isDev }: BuildOptions): webpack.RuleSetRule[] {
     use: [
       {
         loader: 'ts-loader',
-        options: {
-          getCustomTransformers: () => ({
-            before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
-          }),
-          transpileOnly: isDev,
-        },
       },
     ],
     exclude: /node_modules/,

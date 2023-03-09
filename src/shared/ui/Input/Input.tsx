@@ -57,7 +57,7 @@ export const Input = memo((props: InputProps) => {
   }
 
   const onSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    setCaretPosition(e.target?.selectionStart)
+    setCaretPosition(e.target?.selectionStart || 0)
   }
 
   return (

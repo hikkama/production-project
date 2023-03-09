@@ -22,10 +22,22 @@ PrimaryDark.args = {}
 PrimaryDark.decorators = [StoreDecorator({ loginForm: { username: 'admin', password: '123' } }), ThemeDecorator(Theme.DARK)]
 
 export const WithErrorLight = Template.bind({})
-WithErrorLight.decorators = [StoreDecorator({ loginForm: { username: 'admin', password: '123', error: 'Error' } })]
+WithErrorLight.decorators = [StoreDecorator({
+  loginForm: {
+    username: 'admin',
+    password: '123',
+    error: 'Error',
+  },
+})]
 
 export const WithErrorDark = Template.bind({})
-WithErrorDark.decorators = [StoreDecorator({ loginForm: { username: 'admin', password: '123', error: 'Error' } }), ThemeDecorator(Theme.DARK)]
+WithErrorDark.decorators = [StoreDecorator({
+  loginForm: {
+    username: 'admin',
+    password: '123',
+    error: 'Error',
+  },
+}), ThemeDecorator(Theme.DARK)]
 
 export const LoadingLight = Template.bind({})
 LoadingLight.decorators = [StoreDecorator({ loginForm: { username: 'admin', password: '123', isLoading: true } })]
